@@ -1,0 +1,56 @@
+{
+  "name": "hapi-routes-notifications",
+  "version": "2.0.1",
+  "private": false,
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codedoctor/hapi-routes-notifications.git"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/grunt testandcoverage"
+  },
+  "description": "Provides HAPI based notification management endpoints.",
+  "dependencies": {
+    "async": "0.9.0",
+    "hoek": "2.11.0",
+    "boom": "2.6.1",
+    "bson": "0.2.18",
+    "joi": "5.1.0",
+    "api-pagination" : "1.0.6",
+    "underscore": "1.7.0"
+  },
+  "peerDependencies": {
+    "hapi": ">=8.0.0"
+  },
+  "devDependencies": {
+    "blanket": "1.1.6",
+    "codo": "2.0.9",
+    "coffee-script": "1.8.0",
+    "grunt": "0.4.5",
+    "grunt-cli": "0.1.13",
+    "grunt-contrib-coffee": "0.12.0",
+    "grunt-contrib-watch": "0.6.1",
+    "grunt-codo": "0.2.0",
+    "grunt-env": "0.4.2",
+    "grunt-mocha-cov": "0.3.0",
+    "grunt-mocha-test": "0.12.7",
+    "grunt-release": "0.10.0",
+    "grunt-shell": "1.1.1",
+    "hapi": "8.1.0",
+    "hapi-user-store-multi-tenant": "2.0.1",
+    "hapi-store-notifications": "2.0.3",
+    "matchdep": "0.3.0",
+    "mocha": "2.1.0",
+    "mongoose": "3.8.21",
+    "should": "4.6.1"
+  },
+  "config": {
+    "blanket": {
+      "pattern": [
+        "lib"
+      ],
+      "data-cover-never": "node_modules"
+    }
+  }
+}
