@@ -4,4 +4,6 @@ i18n = require "./i18n"
 validateId = Joi.string().length(24)
 
 
-module.exports =  {}
+module.exports =  
+  validateId : validateId
+  userId : validateId

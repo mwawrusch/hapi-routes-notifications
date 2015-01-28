@@ -17,9 +17,10 @@ Primary entry point for the plugin
 ###
 module.exports = (plugin,options = {}) ->
   Hoek.assert options.baseUrl,i18n.optionsBaseUrlRequired
+  Hoek.assert options.tenantId,i18n.optionsTenantIdRequired
   
   storeNotifications = -> plugin.plugins['hapi-store-notifications']
-  Hoek.assert storeNotifications(),i18n.couldNotFindApiStoreCorePlugin
+  Hoek.assert storeNotifications(),i18n.couldNotFindHapiStoreNotificationsPlugin
 
   hapiUserStoreMultiTenant = -> plugin.plugins['hapi-user-store-multi-tenant']
   users = ->
@@ -73,13 +74,12 @@ module.exports = (plugin,options = {}) ->
           baseUrl = options.baseUrl
           reply(helperObjToRest.notification(notification,baseUrl,isInServerAdmin)).code(201)
       else
-        tenantId = "53af466e96ab7635384b71f1"
-        options =
+        optionsQuery =
           where: 
             roles : request.payload.sendToRole
 
         console.log "Users with role #{request.payload.sendToRole}"
-        users().all tenantId,options, (err,userResults) ->
+        users().all options.tenantId,optionsQuery, (err,userResults) ->
           console.log "Error: #{err}" if err
           return reply err if err
           console.log "USERS: #{JSON.stringify(userResults.items)}"
@@ -92,81 +92,3 @@ module.exports = (plugin,options = {}) ->
             return reply err if err
 
             reply({}).code(201)
-
-
-  plugin.route
-    path: "/users/{userId}/notifications"
-    method: "GET"
-    config:
-      description: i18n.descriptionUsersNotificationsGet
-      tags: options.tags
-      validate:
-        params: validationSchemas.paramsUsersNotificationsGet
-
-    handler: (request, reply) ->
-      queryOptions = 
-        where:
-          owningUserId: new ObjectId request.params.userId.toString()
-          hasBeenRead: false
-        sort: '-createdAt'
-
-      #console.log "QUERY: #{JSON.stringify(queryOptions)}"
-
-      storeNotifications().methods.notifications.all  queryOptions,  (err,notificationsResult) ->
-        #console.log "NOTIFICAITON RESULT: #{JSON.stringify(notificationsResult)}"
-        #console.log "NOT ERROR: #{err}" if err
-        return reply err if err
-
-        notificationsResult.items = _.map(notificationsResult.items || [], (x) -> helperObjToRest.notification(x) ) 
-        console.log "POST TRANSFORM #{JSON.stringify(notificationsResult)}"
-
-        reply( apiPagination.toRest( notificationsResult,"/profiles"))
-
-
-  plugin.route
-    path: "/users/{userId}/notifications/mark-as-read"
-    method: "POST"
-    config:
-      description: i18n.descriptionNotificationsMarkAsRead
-      tags: options.tags
-    handler: (request, reply) ->
-      isInServerAdmin = fnIsInServerAdmin(request)
-
-      queryOptions = 
-        where:
-          userId: request.params.userId
-        sort: '-createdAt'
-
-      storeNotifications().methods.notifications.all  queryOptions,  (err,notificationsResult) ->
-        return reply err if err
-
-        baseUrl = options.baseUrl
-
-        notificationsResult.items = _.map(notificationsResult.items, (x) -> helperObjToRest.notification(x,baseUrl,isInServerAdmin) )   
-
-        reply( apiPagination.toRest( notificationsResult,baseUrl))
-
-
-  plugin.route
-    path: "/notifications/{notificationId}/mark-as-read"
-    method: "POST"
-    config:
-      description: i18n.descriptionNotificationsMarkAsRead
-      tags: options.tags
-    handler: (request, reply) ->
-      isInServerAdmin = fnIsInServerAdmin(request)
-
-      queryOptions = 
-        where:
-          userId: request.params.userId
-        sort: '-createdAt'
-
-      storeNotifications().methods.notifications.all  queryOptions,  (err,notificationsResult) ->
-        return reply err if err
-
-        baseUrl = options.baseUrl
-
-        notificationsResult.items = _.map(notificationsResult.items, (x) -> helperObjToRest.notification(x,baseUrl,isInServerAdmin) )   
-
-        reply( apiPagination.toRest( notificationsResult,baseUrl))
-

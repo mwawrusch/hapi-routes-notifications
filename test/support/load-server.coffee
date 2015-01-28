@@ -28,6 +28,7 @@ module.exports = loadServer = (cb) ->
       register: index
       options:
         baseUrl: '/'
+        tenantId: "53af466e96ab7635384b71f1"
   ]
 
   mongoose.disconnect()

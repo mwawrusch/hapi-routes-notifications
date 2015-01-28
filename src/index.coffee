@@ -7,7 +7,10 @@ Hoek = require 'hoek'
 i18n = require './i18n'
 
 routesToExpose = [
-    require './routes-notifications'
+    require './routes-notifications-notification-id-mark-as-read-post'
+    require './routes-notifications-post'
+    require './routes-users-user-id-notifications-get'
+    require './routes-users-user-id-notifications-mark-as-read-post'
 ]
 
 ###

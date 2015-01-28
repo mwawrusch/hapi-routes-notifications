@@ -23,7 +23,7 @@ module.exports =
 
   exampleObjectId: '01234567890123456789000b'
   notificationExceededLimitOf: "Your request exceed the maximum amount of notifications created by a user which is set to"
-
+  optionsTenantIdRequired: "The required parameter tenantId is missing."
 ###
 optionsRoutesBaseNameRequired: "options parameter requires a 'routesBaseName' (/tenants/setup)"
 optionsTagsRequiredAndArray: "options parameter requires a 'tag' field that is an array."
