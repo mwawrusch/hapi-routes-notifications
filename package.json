@@ -1,6 +1,6 @@
 {
   "name": "hapi-routes-notifications",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "private": false,
   "main": "lib/index.js",
   "repository": {
@@ -18,7 +18,7 @@
     "bson": "0.2.18",
     "joi": "5.1.0",
     "api-pagination": "1.0.6",
-    "mongoose-rest-helper" : "1.1.1",
+    "mongoose-rest-helper": "1.1.1",
     "underscore": "1.7.0"
   },
   "peerDependencies": {
