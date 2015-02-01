@@ -55,13 +55,14 @@ module.exports = (plugin,options = {}) ->
 
       queryOptions = 
         where:
-          userId: new ObjectId(request.params.userId.toString()) #ObjectIdhelper here
+          hasBeenRead: false
+          owningUserId: new ObjectId(request.params.userId.toString()) #ObjectIdhelper here
 
       storeNotifications().methods.notifications.all  queryOptions,  (err,notificationsResult) ->
         return reply err if err
 
         fnMarkAsRead = (notification, cb) ->
-          storeNotifications().methods.notifications.patch notification._id, hasBeenRead : true, null, cb
+          storeNotifications().methods.notifications.patch notification._id,{ hasBeenRead : true}, null, cb
 
         async.eachSeries notificationsResult.items,fnMarkAsRead, (err) ->
           return reply err if err
