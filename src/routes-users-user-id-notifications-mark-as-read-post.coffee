@@ -55,7 +55,7 @@ module.exports = (plugin,options = {}) ->
 
       queryOptions = 
         where:
-          userId: request.params.userId #ObjectIdhelper here
+          userId: new ObjectId(request.params.userId.toString()) #ObjectIdhelper here
 
       storeNotifications().methods.notifications.all  queryOptions,  (err,notificationsResult) ->
         return reply err if err

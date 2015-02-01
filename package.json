@@ -18,6 +18,7 @@
     "bson": "0.2.18",
     "joi": "5.1.0",
     "api-pagination": "1.0.6",
+    "mongoose-rest-helper" : "1.1.1",
     "underscore": "1.7.0"
   },
   "peerDependencies": {
